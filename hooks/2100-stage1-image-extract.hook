@@ -46,3 +46,8 @@ rmdir ${_BUILDDIR}/mount
 echo_debug "Cleaning loopback ..."
 losetup -d ${loopdev}
 rm ${_BUILDDIR}/cryptmypi.img
+
+for source_dir in $(find "${_CONFDIR}/trees" -mindepth 1 -maxdepth 1 -type d); do
+    echo_debug "Copying additional files from ${source_dir} ..."
+    rsync -HPavz -q ${source_dir}/ ${_BUILDDIR}/root/
+done
